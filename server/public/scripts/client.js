@@ -5,26 +5,37 @@ $( document ).ready( function(){
   // Establish Click Listeners
   setupClickListeners()
   // load existing koalas on page load
-  getKoalas();
-
+  
+  console.log('our values', getValues());
 }); // end doc ready
 
 function setupClickListeners() {
   $( '#addButton' ).on( 'click', function(){
     console.log( 'in addButton on click' );
     // get user input and put in an object
+    
     // NOT WORKING YET :(
     // using a test object
     let koalaToSend = {
-      name: 'testName',
-      age: 'testName',
-      gender: 'testName',
-      readyForTransfer: 'testName',
-      notes: 'testName',
+      name: getValues().name,
+      age: getValues().age,
+      gender: getValues().gender,
+      readyForTransfer: getValues().ready,
+      notes: getValues().notes,
     };
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
+}
+
+function getValues() {
+  let name = $('#nameIn').val();
+  let age = $('#ageIn').val();
+  let gender = $('#genderIn').val();
+  let readyForTransfer = $('#readyForTransferIn').val();
+  let notes = $('#notesIn').val();
+
+  return {name: name, age: age, gender: gender, ready: readyForTransfer, notes: notes};
 }
 
 function getKoalas(){
