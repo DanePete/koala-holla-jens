@@ -1,5 +1,7 @@
 console.log( 'js' );
 
+let koalas = [];
+
 $( document ).ready( function(){
   console.log( 'JQ' );
   // Establish Click Listeners
@@ -46,25 +48,28 @@ function getKoalas(){
     type: 'GET',
     url: '/koalas'
   }).then(function(response){
-    set(response);
+    koalas = response;
+    set();
     console.log('response', response);
   }).catch(function(error){
     console.log('error in client', error);
   })
 } // end getKoalas
 
-function set(koalas){
+function set(){
   $('#viewKoalas').empty();
 
   for (let i = 0; i < koalas.length; i += 1) {
     let koala = koalas[i];
+    console.log(koala);
+    
     // For each book, append a new row to our table
     $('#viewKoalas').append(`
       <tr>
         <td>${koala.name}</td>
         <td>${koala.age}</td>
         <td>${koala.gender}</td>
-        <td>${koala.ready}</td>
+        <td>${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
       </tr>
     `);
@@ -74,5 +79,17 @@ function set(koalas){
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
+   
+  $.ajax({
+    type: 'POST',
+    url: '/koalas',
+    data: getValues()
+  }).then( function (response) {
+    console.log('send status', response );
+    getKoalas(); 
+  }).catch(function (err){
+    console.log('error', err);
+    
+  });
  
 }
