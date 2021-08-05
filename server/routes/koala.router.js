@@ -17,6 +17,20 @@ console.log('GOT TO KOALA ROUTER JS FILE');
 
 // GET
 
+koalaRouter.get('/', (req, res) => {
+    let sqlQuery = `
+        SELECT * FROM "koala"
+    `;
+    pool.query(sqlQuery)
+        .then((dbRes) => {
+            console.log('dbRes.rows', dbRes.rows);
+            res.send(dbRes.rows);
+        })
+        .catch((error) => {
+            res.sendStatus(500);
+        });
+});
+
 // POST
 
 // PUT

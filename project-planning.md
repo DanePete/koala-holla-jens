@@ -14,7 +14,7 @@ plan of action / potential features/branches
        - ready_to_transfer) boolean or true/false varchar value
        - Notes) VARCHAR (255)
 [x] = We need to setup and define our connection to database - get/post stretch(put/delete)
-[ ] = In client.js we need to capture the input values from the form and modify the object being created to utalize our new input values
+[x] = In client.js we need to capture the input values from the form and modify the object being created to utalize our new input values
 
 [ ] = create functions on server and  client for 
   [ ] = GET JAY
