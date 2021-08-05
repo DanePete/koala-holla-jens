@@ -1,6 +1,12 @@
 const express = require('express');
 const koalaRouter = express.Router();
 const pg = require('pg');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.static('server/public'));
 
 // DB CONNECTION
 const config = {
@@ -64,6 +70,34 @@ koalaRouter.post('/', (req, res) =>{
         });
     
 })
+
+/**
+ * Router PUT
+ * Sends a put request to the server to update the ready_to_transfer cell for a specific record
+ */
+ koalaRouter.put('/:id', (req, res) => {
+  // console.log('params', req.params);
+  console.log('ready param', req.body.transferData);
+  // let ready = req.params.ready;
+  // console.log('ready variable check', ready);
+  let sqlQuery = `
+    UPDATE koala SET "ready_to_transfer" =$1 WHERE id = $2;
+  `;
+
+  let sqlParams = [
+    req.body.transferData, // $1
+    req.params.id  // $2
+  ]
+
+  pool.query(sqlQuery, sqlParams)
+    .then((dbRes) => {
+        res.send(201);
+    })
+    .catch((err) => {
+        console.log("post error", err);
+        res.sendStatus(500);
+    });
+});
 
 // PUT
 

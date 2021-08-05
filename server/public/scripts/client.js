@@ -8,6 +8,8 @@ $( document ).ready( function(){
   setupClickListeners()
   // load existing koalas on page load
   getKoalas();
+  
+  $(document).on('click', '.btn', updateKoala);
 
   console.log('our values', getValues());
 }); // end doc ready
@@ -65,12 +67,13 @@ function set(){
     
     // For each book, append a new row to our table
     $('#viewKoalas').append(`
-      <tr>
+      <tr data-id=${koala.id} data-ready=${koala.ready_to_transfer}>
         <td>${koala.name}</td>
         <td>${koala.age}</td>
         <td>${koala.gender}</td>
         <td>${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
+        <td><button id="transfer" class="btn btn-warning">Ready for Transfer</button></td>
       </tr>
     `);
   }
@@ -92,4 +95,30 @@ function saveKoala( newKoala ){
     
   });
  
+}
+
+/**
+ * Update Koala Function
+ * Updates our ready_to_transfer cell in the database
+ */
+function updateKoala() {
+  let id = $(this).closest('tr').data('id');
+  let isTransfered = $(this).closest('tr').data('ready');
+  
+  if(isTransfered === true || isTransfered === null) {
+    isTransfered = false;
+  } else if(isTransfered === false ) {
+    isTransfered = true;
+  }
+
+  $.ajax({
+    url: `/koalas/${id}`,
+    type: 'PUT',
+    data: {transferData: isTransfered}
+  }).then(function(response) {
+    getKoalas(); 
+  }).catch(function(error){
+    console.log('error in GET', error);
+  });
+
 }
