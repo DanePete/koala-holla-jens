@@ -17,8 +17,8 @@ plan of action / potential features/branches
 [x] = In client.js we need to capture the input values from the form and modify the object being created to utalize our new input values
 
 [ ] = create functions on server and  client for 
-  [ ] = GET JAY
-  [ ] = POST HASSAN
+  [X] = GET JAY
+  [X] = POST HASSAN
   [ ] = PUT DANE
   [ ] = DELETE 
 
