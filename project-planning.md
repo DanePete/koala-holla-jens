@@ -19,7 +19,7 @@ plan of action / potential features/branches
 [ ] = create functions on server and  client for 
   [X] = GET JAY
   [X] = POST HASSAN
-  [ ] = PUT DANE
+  [X] = PUT DANE
   [ ] = DELETE 
 
 
