@@ -9,12 +9,13 @@ $( document ).ready( function(){
   // load existing koalas on page load
   getKoalas();
   
-  $(document).on('click', '.btn', updateKoala);
-
+  $(document).on('click', '#transfer', updateKoala);
+  $('#viewKoalas').on('click', '#delete', deleteKoala)
   console.log('our values', getValues());
 }); // end doc ready
 
 function setupClickListeners() {
+
   $( '#addButton' ).on( 'click', function(){
     console.log( 'in addButton on click' );
     // get user input and put in an object
@@ -74,6 +75,7 @@ function set(){
         <td>${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
         <td><button id="transfer" class="btn btn-warning">Ready for Transfer</button></td>
+        <td><button id="delete" class="btn btn-warning">DELETE</button></td>
       </tr>
     `);
   }
@@ -121,4 +123,17 @@ function updateKoala() {
     console.log('error in GET', error);
   });
 
+}
+
+function deleteKoala(){
+  let koalaID = $(this).closest('tr').data('id')
+  console.log( 'testing ID', koalaID);
+  $.ajax({
+      type: 'DELETE', 
+      url: `/koalas/${koalaID}`
+  }).then(function(res){
+    console.log('delete is working 🙀');
+    getKoalas()
+    
+  })
 }
